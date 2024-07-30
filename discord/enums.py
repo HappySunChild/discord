@@ -1,8 +1,25 @@
-from enum import Enum
+from enum import Enum, IntEnum
+
+class GatewayOperation(IntEnum):
+	Heartbeat = 1 				# send/receive
+	HeartbeatAcknowledged = 11 	# receive
+	
+	Hello = 10 					# receive
+	Identify = 2 				# send
+	Dispatch = 0 				# receive
+	
+	PresenceUpdate = 3 			# send
+	VoiceStateUpdate = 4 		# send
+	Resume = 6 					# send
+	Reconnect = 7 				# receive
+	RequestGuildMembers = 8 	# send
+	InvalidSession = 9 			# receive
 
 class GatewayEventType(Enum):
-	Default = None
+	Unknown = None
+	
 	Ready = 'READY'
+	SessionsReplace = 'SESSIONS_REPLACE'
 	
 	GuildCreate = 'GUILD_CREATE'
 	GuildUpdate = 'GUILD_UPDATE'
@@ -54,14 +71,21 @@ class GatewayEventType(Enum):
 	
 	PresenceUpdate = 'PRESENCE_UPDATE'
 	
+	ConversationSummaryUpdate = 'CONVERSATION_SUMMARY_UPDATE'
 	MessageCreate = 'MESSAGE_CREATE'
 	MessageUpdate = 'MESSAGE_UPDATE'
 	MessageDelete = 'MESSAGE_DELETE'
 	MessageDeleteBulk = 'MESSAGE_DELETE_BULK'
+	MessageAcknowledge = 'MESSAGE_ACK'
 	
 	MessageReactionAdd = 'MESSAGE_REACTION_ADD'
 	MessageReactionRemove = 'MESSAGE_REACTION_REMOVE'
 	MessageReactionRemoveAll = 'MESSAGE_REACTION_REMOVE_ALL'
 	MessageReactionRemoveEmoji = 'MESSAGE_REACTION_REMOVE_EMOJI'
+	
+	RelationshipAdd = 'RELATIONSHIP_ADD'
+	RelationshipRemove = 'RELATIONSHIP_REMOVE'
+	
+	NotificationCreate = 'NOTIFICATION_CENTER_ITEM_CREATE'
 	
 	TypingStart = 'TYPING_START'
