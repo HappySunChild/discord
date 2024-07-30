@@ -9,7 +9,7 @@ from sys import platform
 from asyncio import run, sleep, gather
 
 if TYPE_CHECKING:
-	from .client import DiscordClient
+	from ..client import DiscordClient
 
 class GatewayEvent:
 	def __init__(self, response: WebsocketResponse) -> None:
@@ -24,9 +24,10 @@ class GatewayEvent:
 		return f'<{self.__class__.__name__}: {self.type} ({self.operation})>'
 
 class DiscordGateway:
-	def __init__(self, token: str) -> None:
+	def __init__(self, token: str, intents = None) -> None:
 		self.socket = WebsocketClient('wss://gateway.discord.gg')
 		self.token = token
+		self.intents = intents
 		
 		self._last_sequence = None
 		self._heartbeat_interval = None
@@ -35,7 +36,7 @@ class DiscordGateway:
 	def fromClient(cls, client: DiscordClient):
 		token = client.token
 		
-		new_gateway = cls(token=token)
+		new_gateway = cls(token=token, intents=client.intents)
 		new_gateway.on_event = client._on_event
 		
 		return new_gateway
@@ -91,14 +92,19 @@ class DiscordGateway:
 			raise HeartbeatNotAcknowledged('Heartbeat did not receive a HeartbeatACK response')
 	
 	async def _send_identity(self):
-		await self._send(2, {
+		payload = {
 			'token': self.token,
 			'properties': {
 				'os': platform,
 				'browser': 'python',
 				'device': 'python'
 			}
-		})
+		}
+		
+		if self.intents:
+			payload['intents'] = int(self.intents)
+		
+		await self._send(2, payload)
 	
 	async def _send(self, operation: int, payload: Any = None):
 		await self.socket.send({
