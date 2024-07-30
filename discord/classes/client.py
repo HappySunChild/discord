@@ -1,8 +1,8 @@
-from .utility.requester import Requester
+from ..utility.requester import Requester
 
-from .classes.gateway import DiscordGateway, GatewayEvent
-from .classes.channel import Channel
-from .classes.intents import Intents
+from .gateway import DiscordGateway, GatewayEvent
+from .channel import Channel
+from .intents import Intents
 
 class DiscordClient:
 	def __init__(self, token: str, intents: Intents = None) -> None:
@@ -13,7 +13,6 @@ class DiscordClient:
 		self.gateway = DiscordGateway.fromClient(self)
 	
 	def run(self):
-		print('start client')
 		self.gateway.connect()
 	
 	def get_channel(self, channel_id: int):
@@ -23,6 +22,9 @@ class DiscordClient:
 	
 	async def _on_event(self, event: GatewayEvent):
 		data = event.data
+	
+	def on_message(self):
+		pass
 	
 	def on_reaction_add(self, data):
 		pass

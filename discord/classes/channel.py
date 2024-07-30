@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 from .base import BaseItem
 
 if TYPE_CHECKING:
-	from ..client import DiscordClient
+	from .client import DiscordClient
 
 class Channel(BaseItem):
 	def __init__(self, client: DiscordClient, id: int) -> None:

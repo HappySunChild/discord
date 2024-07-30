@@ -9,7 +9,7 @@ from sys import platform
 from asyncio import run, sleep, gather
 
 if TYPE_CHECKING:
-	from ..client import DiscordClient
+	from .client import DiscordClient
 
 class GatewayEvent:
 	def __init__(self, response: WebsocketResponse) -> None:

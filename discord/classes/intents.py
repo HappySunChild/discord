@@ -36,7 +36,7 @@ class Intents:
 		return new_intents
 	
 	def __init__(self) -> None:
-		for index, attr in enumerate(self.FLAGS):
+		for attr in self.FLAGS:
 			setattr(self, attr, False)
 	
 	def __int__(self):
