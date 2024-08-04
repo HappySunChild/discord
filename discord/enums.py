@@ -1,5 +1,15 @@
 from enum import Enum, IntEnum
 
+class EmbedType(Enum):
+	Rich = 'rich'
+	
+	Image = 'image'
+	Video = 'video'
+	Gifv = 'gifv'
+	
+	Article = 'article'
+	Link = 'link'
+
 class GatewayOperation(IntEnum):
 	Heartbeat = 1 				# send/receive
 	HeartbeatAcknowledged = 11 	# receive
