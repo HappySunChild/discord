@@ -1,5 +1,7 @@
+from ..enums import EmbedType
+
 class Embed:
-	def __init__(self, title: str, description: str = None, type: str = 'rich', **kwargs) -> None:
+	def __init__(self, title: str, description: str = None, type: EmbedType = EmbedType.Rich, **kwargs) -> None:
 		self.title = title
 		self.description = description
 		self.type = type
@@ -43,7 +45,7 @@ class Embed:
 			'url': self.url,
 			
 			'title': self.title,
-			'type': self.type,
+			'type': self.type.value,
 			'description': self.description,
 			'color': self.color,
 			
