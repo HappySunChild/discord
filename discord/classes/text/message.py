@@ -1,9 +1,8 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
-from dateutil.parser import parse
-
 from .embed import Embed
+from ..user import User
 
 if TYPE_CHECKING:
 	from ..webhook import Webhook
@@ -17,10 +16,14 @@ class Message:
 		self.embeds = [Embed(**embed_data) for embed_data in message_data['embeds']]
 		
 		self.mentions = message_data['mentions']
-		self.timestamp = parse(message_data['timestamp']).timestamp()
+		
+		self.timestamp = message_data['timestamp']
+		self.edited_timestamp = message_data.get('edited_timestamp')
+		
+		self.author = User(message_data['author'])
 	
 	def __repr__(self) -> str:
-		return f'<{self.__class__.__name__}: {self.channel_id}/{self.id}>'
+		return f'<{self.__class__.__name__}: {self.content}, {self.author}>'
 
 class WebhookMessage(Message):
 	def __init__(self, webhook: Webhook, message_data: dict) -> None:
