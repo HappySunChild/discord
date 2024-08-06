@@ -5,6 +5,7 @@ from .gateway import DiscordGateway, GatewayEvent
 from .text.channel import Channel
 from .intents import Intents
 
+from .user import AuthenticatedUser
 from .presence import Presence
 from .responses import GatewayReadyInfo, GuildMembersInfo
 
@@ -25,6 +26,13 @@ class DiscordClient:
 	
 	def get_channel(self, channel_id: int):
 		return Channel(self, channel_id)
+	
+	def get_authenticated_user(self):
+		user_data, _ = self.requester.get(
+			url='https://discord.com/api/v9/users/@me'
+		)
+		
+		return AuthenticatedUser(user_data=user_data)
 	
 	async def request_get_guild_members(self, guild_id: int, limit: int = 0, query: str = None, user_ids: list[int] = None, presences: bool = False):
 		await self.gateway.request_get_guild_members(guild_id=guild_id, limit=limit, query=query, user_ids=user_ids, presences=presences)
