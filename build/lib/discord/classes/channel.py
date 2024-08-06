@@ -1,17 +1,15 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
-from .base import BaseItem
-
 if TYPE_CHECKING:
 	from .client import DiscordClient
 
-class Channel(BaseItem):
+class Channel:
 	def __init__(self, client: DiscordClient, id: int) -> None:
-		super().__init__(client, id)
+		self.client = client
+		self.id = id
 	
 	def send_message(self, message: str):
-		
 		payload = {
 			'content': message,
 		}
