@@ -12,8 +12,13 @@ class User(BaseUser):
 		self.display_name = user_data.get('global_name')
 		self.username = user_data.get('username')
 		self.discriminator = user_data.get('discriminator')
+		
+		self.avatar = user_data.get('avatar')
+	
+	def __repr__(self) -> str:
+		return f'<{self.__class__.__name__}: {self.username}>'
 
-class AuthenticatedUser(BaseUser):
+class AuthenticatedUser(User):
 	def __init__(self, user_data: dict) -> None:
 		super().__init__(user_data)
 		
