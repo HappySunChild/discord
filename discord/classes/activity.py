@@ -17,6 +17,7 @@ class Activity:
 		self.details = data.get('details')
 		self.application_id = data.get('application_id')
 		self.buttons = data.get('buttons')
+		self.assets = data.get('assets')
 		
 		self._raw = data
 	

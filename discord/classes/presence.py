@@ -35,6 +35,10 @@ class Presence:
 		self.user = BaseUser(presence_data['user'])
 		self._raw = presence_data
 	
+	@property
+	def in_voice_chat(self):
+		return self.has_activity(ActivityType.HangStatus)
+	
 	def has_activity(self, activity_type: ActivityType):
 		for activity in self.activities:
 			if activity.type == activity_type:
