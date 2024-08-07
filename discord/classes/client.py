@@ -9,16 +9,27 @@ from .user import AuthenticatedUser
 from .presence import Presence
 from .responses import GatewayReadyInfo, GuildMembersInfo
 
+import asyncio
+
 class DiscordClient:
 	def __init__(self, token: str, intents: Intents = None) -> None:
+		self._ready = False
+		
 		self.token = token
 		self.intents = intents
 		
 		self.requester = Requester(token=token)
 		self.gateway = DiscordGateway.fromClient(self)
 	
+	async def wait_for_ready(self):
+		while not self._ready:
+			await asyncio.sleep(0)
+	
 	def run(self):
 		self.gateway.start()
+	
+	async def run_async(self):
+		await self.gateway._start()
 	
 	async def close(self):
 		await self.gateway._disconnect()
@@ -43,7 +54,7 @@ class DiscordClient:
 		data: dict = event.data
 		
 		if event_type == GatewayEventType.Ready:
-			await self.on_ready(GatewayReadyInfo(data=data))
+			await self._on_ready(GatewayReadyInfo(data=data))
 		elif event_type == GatewayEventType.GuildMembersChunk:
 			await self.on_guild_members_response(GuildMembersInfo(data=data))
 		elif event_type == GatewayEventType.MessageCreate:
@@ -52,6 +63,10 @@ class DiscordClient:
 			await self.on_reaction_add(data)
 		elif event_type == GatewayEventType.PresenceUpdate:
 			await self.on_presence_update(Presence(data))
+	
+	async def _on_ready(self, info: GatewayReadyInfo):
+		self._ready = True
+		await self.on_ready(info=info)
 	
 	# events
 	async def on_ready(self, info: GatewayReadyInfo):
