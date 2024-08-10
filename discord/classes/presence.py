@@ -25,6 +25,13 @@ class ClientStatus:
 	def is_mobile(self):
 		return self.mobile_presence != PresenceStatusType.Offline
 
+PRESENCE_COLORS = {
+	'Online': 0x23A55A,
+	'Idle': 0xF0B232,
+	'DoNotDisturb': 0xF23F43,
+	'Offline': 0x80848E
+}
+
 class Presence:
 	def __init__(self, presence_data: dict) -> None:
 		self.status = PresenceStatusType(presence_data['status'])
@@ -34,6 +41,10 @@ class Presence:
 		
 		self.user = BaseUser(presence_data['user'])
 		self._raw = presence_data
+	
+	@property
+	def color(self):
+		return PRESENCE_COLORS[self.status.name]
 	
 	@property
 	def in_voice_chat(self):

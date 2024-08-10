@@ -11,6 +11,8 @@ class Embed:
 		self.footer = kwargs.get('footer')
 		self.author = kwargs.get('author')
 		self.image = None
+		self.video = None
+		self.thumbnail = None
 		
 		self.fields = []
 	
@@ -31,14 +33,32 @@ class Embed:
 		self.url = url
 	
 	
-	def set_image(self, url: str):
-		self.image = {'url': url}
+	def set_video(self, url: str, height: int = None, width: int = None):
+		self.video = {
+			'url': url,
+			'height': height,
+			'width': width
+		}
 	
-	def set_footer(self, text: str):
-		self.footer = {'text': text}
+	def set_image(self, url: str, height: int = None, width: int = None):
+		self.image = {
+			'url': url,
+			'height': height,
+			'width': width
+		}
 	
-	def set_author(self, name: str):
-		self.author = {'name': name}
+	def set_thumbnail(self, url: str, height: int = None, width: int = None):
+		self.thumbnail = {
+			'url': url,
+			'height': height,
+			'width': width
+		}
+	
+	def set_footer(self, text: str, icon_url: str = None):
+		self.footer = {'text': text, 'icon_url': icon_url}
+	
+	def set_author(self, name: str, icon_url: str = None):
+		self.author = {'name': name, 'icon_url': icon_url}
 	
 	def _get_data(self):
 		data = {
@@ -49,6 +69,7 @@ class Embed:
 			'description': self.description,
 			'color': self.color,
 			
+			'thumbnail': self.thumbnail,
 			'image': self.image,
 			'fields': self.fields,
 			'footer': self.footer,
