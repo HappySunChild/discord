@@ -13,6 +13,18 @@ class ClientStatus:
 		
 		self._raw = status_data
 	
+	def get_platform(self):
+		if self.is_mobile:
+			return 'Mobile'
+		
+		if self.is_web:
+			return 'Web'
+		
+		if self.is_desktop:
+			return 'Desktop'
+		
+		return None
+	
 	@property
 	def is_web(self):
 		return self.web_presence != PresenceStatusType.Offline
