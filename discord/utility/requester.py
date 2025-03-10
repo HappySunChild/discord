@@ -4,7 +4,7 @@ class Requester:
 	def __init__(self, token: str = None) -> None:
 		self.session = Session()
 		
-		if token:
+		if token != None:
 			self.set_header('Authorization', token)
 	
 	def process_url(self, url: str) -> str:
