@@ -5,7 +5,7 @@ setuptools.setup(
 	description='',
 	version='1.0.2',
 	author='HappySunChild',
-	url='https://github.com/HappySunChild/socket2',
+	url='https://github.com/HappySunChild/discord',
 	
 	packages=setuptools.find_packages(),
 	python_requires='>=3.9',
