@@ -3,7 +3,7 @@ from ..utility.requester import Requester
 from .text.message import WebhookMessage
 from .text.embed import Embed
 
-class _WebhookRequester(Requester):
+class WebhookRequester(Requester):
 	def process_url(self, url: str) -> str:
 		return f'{url}?wait=true'
 
@@ -15,7 +15,7 @@ class Webhook:
 		self.name = None
 		self.avatar_url = None
 		
-		self.requester = _WebhookRequester()
+		self.requester = WebhookRequester()
 	
 	@property
 	def url(self):
@@ -53,3 +53,9 @@ class Webhook:
 		message_data, _ = self.requester.post(self.url, data)
 		
 		return WebhookMessage(self, message_data)
+	
+	def set_avatar(self, avatarUrl: str):
+		self.avatar_url = avatarUrl
+	
+	def set_name(self, newName: str):
+		self.name = newName
