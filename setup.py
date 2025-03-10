@@ -3,7 +3,7 @@ import setuptools
 setuptools.setup(
 	name='discord',
 	description='',
-	version='1.0.0',
+	version='1.0.2',
 	author='HappySunChild',
 	url='https://github.com/HappySunChild/socket2',
 	

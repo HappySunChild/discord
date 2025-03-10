@@ -1,0 +1,11 @@
+Metadata-Version: 2.2
+Name: discord
+Version: 1.0.2
+Home-page: https://github.com/HappySunChild/socket2
+Author: HappySunChild
+Requires-Python: >=3.9
+Requires-Dist: websockets>=12.0
+Dynamic: author
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
